@@ -12,7 +12,7 @@
   {
     "url": "appstore.codeflash.eu",
     "title": "Appstore-Android",
-    "content": "Apps"
+    "content": "Apps von Codeflash für android"
   },
   {
     "url": "https://codeflash.eu/websites/loes/websites/aufgabenliste/index.html",
@@ -42,6 +42,6 @@
   {
     "url": "https://docs.codeflash.eu/",
     "title": "Dokumentation – CodeFlash",
-    "content": "Hier findest du alle Informationen zur API und Implementierung."
+    "content": "Hier findest du alle Informationen zur API und Implementierung von Codeflash"
   }
 ]
