@@ -1,43 +1,42 @@
 [
-    {
-      "url": "https://codeflash.eu/",
-      "title": "Startseite – CodeFlash",
-      "content": "Willkommen bei CodeFlash – deine Plattform für Webentwicklung."
-    },
-    {
-      "url": "https://codeflash.eu/website/loes/index.html",
-      "title": "Loes"
-      "content": "Websites von Loes"
-    },
-    {
-      "url": "https://codeflash.eu/websites/loes/websites/aufgabenliste/index.html",
-      "title": "Aufgabenliste"
-      "content": "Speichere deine Aufgaben"
-    },
-    {
-      "url": "https://codeflash.eu/websites/loes/websites/web-cut-speicher/index.html",
-      "title": "Web-Cut-Speicher"
-      "content": "speicher deine Websites"
-    },
-    {
-      "url": "https://codeflash.eu/websites/loes/websites/taschenrechner/index.html",
-      "title": "Taschenrechner"
-      "content": "rechner"
-    },
-    {
-      "url": "https://codeflash.eu/websites/loes/websites/bruchrechner",
-      "title": "Bruchrechner"
-      "content": "rechner"
-    },
-    {
-      "url": "https://codeflash.eu/blog",
-      "title": "Blog – CodeFlash",
-      "content": "Hier findest du News und Tipps rund um HTML, CSS und JS."
-    },
-    {
-      "url": "https://docs.codeflash.eu/",
-      "title": "Dokumentation – CodeFlash",
-      "content": "Hier findest du alle Informationen zur API und Implementierung."
-    }
-  ]
-  
+  {
+    "url": "https://codeflash.eu/",
+    "title": "Startseite – CodeFlash",
+    "content": "Willkommen bei CodeFlash – deine Plattform für Webentwicklung."
+  },
+  {
+    "url": "https://codeflash.eu/website/loes/index.html",
+    "title": "Loes",
+    "content": "Websites von Loes"
+  },
+  {
+    "url": "https://codeflash.eu/websites/loes/websites/aufgabenliste/index.html",
+    "title": "Aufgabenliste",
+    "content": "Speichere deine Aufgaben"
+  },
+  {
+    "url": "https://codeflash.eu/websites/loes/websites/web-cut-speicher/index.html",
+    "title": "Web-Cut-Speicher",
+    "content": "speicher deine Websites"
+  },
+  {
+    "url": "https://codeflash.eu/websites/loes/websites/taschenrechner/index.html",
+    "title": "Taschenrechner",
+    "content": "rechner"
+  },
+  {
+    "url": "https://codeflash.eu/websites/loes/websites/bruchrechner",
+    "title": "Bruchrechner",
+    "content": "rechner"
+  },
+  {
+    "url": "https://codeflash.eu/blog",
+    "title": "Blog – CodeFlash",
+    "content": "Hier findest du News und Tipps rund um HTML, CSS und JS."
+  },
+  {
+    "url": "https://docs.codeflash.eu/",
+    "title": "Dokumentation – CodeFlash",
+    "content": "Hier findest du alle Informationen zur API und Implementierung."
+  }
+]
