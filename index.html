@@ -4,93 +4,164 @@
   <meta charset="UTF-8">
   <title>CodeFlash Suche</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
+    * {
+      box-sizing: border-box;
+    }
     body {
       font-family: Arial, sans-serif;
-      text-align: center;
       margin: 0;
-      padding-top: 100px;
-      background-color: #f9f9f9;
-    }
-    h1 {
-      font-size: 40px;
+      padding: 0;
+      background-color: #fff;
       color: #202124;
     }
-    input {
-      width: 60%;
+    .start-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .logo {
+      font-size: 80px;
+      color: #4285f4;
+      font-family: 'Product Sans', Arial, sans-serif;
+      margin-bottom: 30px;
+    }
+    .search-box {
+      width: 100%;
       max-width: 600px;
-      padding: 15px;
-      font-size: 18px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
+      display: flex;
+      justify-content: center;
+    }
+    .search-box input {
+      width: 100%;
+      padding: 12px 20px;
+      font-size: 16px;
+      border: 1px solid #dfe1e5;
+      border-radius: 24px;
       outline: none;
+      transition: box-shadow 0.2s;
     }
-    #results {
-      margin-top: 40px;
+    .search-box input:focus {
+      box-shadow: 0 1px 6px rgba(32,33,36,0.28);
+      border-color: rgba(223,225,229,0);
     }
-    .result {
-      background: white;
-      margin: 10px auto;
-      width: 60%;
-      max-width: 700px;
-      text-align: left;
+    .hidden {
+      display: none;
+    }
+    header {
+      display: none;
+      align-items: center;
       padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      border-bottom: 1px solid #dadce0;
     }
-    .result a {
-      font-size: 20px;
+    header.visible {
+      display: flex;
+    }
+    header h1 {
+      font-size: 24px;
+      color: #4285f4;
+      margin-right: 20px;
+      font-family: 'Product Sans', Arial, sans-serif;
+    }
+    .search-top {
+      flex: 1;
+    }
+    .search-top input[type="text"] {
+      width: 100%;
+      max-width: 600px;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: 1px solid #dfe1e5;
+      border-radius: 24px;
+      outline: none;
+      transition: box-shadow 0.2s;
+    }
+    .search-top input[type="text"]:focus {
+      box-shadow: 0 1px 6px rgba(32,33,36,0.28);
+      border-color: rgba(223,225,229,0);
+    }
+    .results {
+      padding: 30px 40px;
+    }
+    .result-item {
+      margin-bottom: 30px;
+    }
+    .result-item a {
+      font-size: 18px;
       color: #1a0dab;
       text-decoration: none;
     }
-    .result p {
+    .result-item a:hover {
+      text-decoration: underline;
+    }
+    .result-item p {
       color: #4d5156;
       font-size: 14px;
     }
   </style>
 </head>
 <body>
-  <h1>CodeFlash Suche</h1>
-  <input type="text" id="search" placeholder="Suche auf codeflash.eu...">
-  <div id="results"></div>
+  <div class="start-wrapper" id="startScreen">
+    <div class="logo">CodeFlash</div>
+    <div class="search-box">
+      <input type="text" id="startSearch" placeholder="Suche auf codeflash.eu..." onkeydown="if(event.key==='Enter'){startSearch()}">
+    </div>
+  </div>
+
+  <header id="searchHeader">
+    <h1>CodeFlash</h1>
+    <div class="search-top">
+      <input type="text" id="search" placeholder="Suche auf codeflash.eu..." onkeydown="if(event.key==='Enter'){submitSearch()}">
+    </div>
+  </header>
+
+  <div class="results" id="results"></div>
 
   <script>
-    let index = [];
+    function startSearch() {
+      const term = document.getElementById("startSearch").value.trim();
+      if (!term) return;
+      document.getElementById("startScreen").classList.add("hidden");
+      document.getElementById("searchHeader").classList.add("visible");
+      const searchInput = document.getElementById("search");
+      searchInput.value = term;
+      doSearch(term);
+    }
 
-    // Lade JSON-Datei mit Seiteninhalt
-    fetch("index.json")
-      .then(res => res.json())
-      .then(data => index = data)
-      .catch(err => {
-        document.getElementById("results").innerHTML =
-          "<p>Fehler beim Laden der index.json</p>";
-      });
+    function submitSearch() {
+      const term = document.getElementById("search").value.trim();
+      if (!term) return;
+      doSearch(term);
+    }
 
-    document.getElementById("search").addEventListener("input", e => {
-      const term = e.target.value.toLowerCase();
-      const filtered = index.filter(entry =>
-        entry.title.toLowerCase().includes(term) ||
-        entry.content.toLowerCase().includes(term)
-      );
+    function doSearch(query) {
+      fetch("index.json")
+        .then(res => res.json())
+        .then(data => {
+          const results = data.filter(entry =>
+            entry.title.toLowerCase().includes(query.toLowerCase()) ||
+            entry.content.toLowerCase().includes(query.toLowerCase())
+          );
 
-      const resultsDiv = document.getElementById("results");
-      resultsDiv.innerHTML = "";
-
-      if (term.trim() === "") return;
-
-      if (filtered.length === 0) {
-        resultsDiv.innerHTML = "<p>Keine Ergebnisse gefunden.</p>";
-      } else {
-        filtered.forEach(entry => {
-          resultsDiv.innerHTML += `
-            <div class="result">
-              <a href="${entry.url}" target="_blank">${entry.title}</a>
-              <p>${entry.content.slice(0, 200)}...</p>
-            </div>
-          `;
+          const resultsDiv = document.getElementById("results");
+          if (results.length === 0) {
+            resultsDiv.innerHTML = "<p>Keine Ergebnisse gefunden.</p>";
+          } else {
+            resultsDiv.innerHTML = results.map(entry => `
+              <div class="result-item">
+                <a href="${entry.url}" target="_blank">${entry.title}</a>
+                <p>${entry.content.slice(0, 200)}...</p>
+              </div>
+            `).join("");
+          }
+        })
+        .catch(err => {
+          document.getElementById("results").innerHTML = "<p>Fehler beim Laden der index.json.</p>";
         });
-      }
-    });
+    }
   </script>
 </body>
 </html>
