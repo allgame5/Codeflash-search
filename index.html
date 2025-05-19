@@ -32,8 +32,7 @@
     .search-box {
       width: 100%;
       max-width: 600px;
-      display: flex;
-      justify-content: center;
+      position: relative;
     }
     .search-box input {
       width: 100%;
@@ -47,6 +46,26 @@
     .search-box input:focus {
       box-shadow: 0 1px 6px rgba(32,33,36,0.28);
       border-color: rgba(223,225,229,0);
+    }
+    .suggestion-box {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background: white;
+      border: 1px solid #dfe1e5;
+      border-top: none;
+      max-height: 200px;
+      overflow-y: auto;
+      border-radius: 0 0 24px 24px;
+      z-index: 10;
+    }
+    .suggestion-box div {
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+    .suggestion-box div:hover {
+      background-color: #f1f3f4;
     }
     .hidden {
       display: none;
@@ -107,7 +126,10 @@
   <div class="start-wrapper" id="startScreen">
     <div class="logo">CodeFlash</div>
     <div class="search-box">
-      <input type="text" id="startSearch" placeholder="Suche auf codeflash.eu..." onkeydown="if(event.key==='Enter'){startSearch()}">
+      <input type="text" id="startSearch" placeholder="Suche auf codeflash.eu..."
+             onkeydown="if(event.key==='Enter'){startSearch()}"
+             oninput="showSuggestions(this.value)" onclick="showSuggestions(this.value)">
+      <div id="suggestionBox" class="suggestion-box hidden"></div>
     </div>
   </div>
 
@@ -121,6 +143,45 @@
   <div class="results" id="results"></div>
 
   <script>
+    const suggestions = [
+      "HTML Tutorial",
+      "CSS Tricks",
+      "JavaScript Guide",
+      "Firebase Integration",
+      "Webdesign Tipps",
+      "Dark Mode einbauen",
+      "Responsive Design",
+      "SEO Grundlagen",
+      "Code optimieren",
+      "Website veröffentlichen"
+    ];
+
+    function showSuggestions(input) {
+      const box = document.getElementById("suggestionBox");
+      const value = input.trim().toLowerCase();
+
+      if (!value) {
+        box.classList.add("hidden");
+        return;
+      }
+
+      const filtered = suggestions.filter(s => s.toLowerCase().includes(value));
+
+      if (filtered.length === 0) {
+        box.classList.add("hidden");
+        return;
+      }
+
+      box.innerHTML = filtered.map(s => `<div onclick="selectSuggestion('${s}')">${s}</div>`).join("");
+      box.classList.remove("hidden");
+    }
+
+    function selectSuggestion(text) {
+      document.getElementById("startSearch").value = text;
+      document.getElementById("suggestionBox").classList.add("hidden");
+      startSearch();
+    }
+
     function startSearch() {
       const term = document.getElementById("startSearch").value.trim();
       if (!term) return;
@@ -162,6 +223,15 @@
           document.getElementById("results").innerHTML = "<p>Fehler beim Laden der index.json.</p>";
         });
     }
+
+    // Versteckt Vorschläge beim Klick außerhalb
+    document.addEventListener("click", function(event) {
+      const box = document.getElementById("suggestionBox");
+      const input = document.getElementById("startSearch");
+      if (!box.contains(event.target) && event.target !== input) {
+        box.classList.add("hidden");
+      }
+    });
   </script>
 </body>
 </html>
