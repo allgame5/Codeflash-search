@@ -145,7 +145,7 @@
   <script>
     const suggestions = [
       "Startseite - CodeFlash",
-      "Nuvia - Suchmaschiene",
+      "Nuvia - Suchmaschine",
       "irregular verbs - Englisch",
       "Loes",
       "Internet Speedtest",
@@ -153,20 +153,16 @@
       "Aufgabenliste",
       "Web-Cut-Speicher",
       "Taschenrechner",
-      "Bruchrechner"
-      "Blog – CodeFlash"
+      "Bruchrechner",
+      "Blog – CodeFlash",
       "Dokumentation – CodeFlash"
-      ""
-      ""
-      "" 
-      "" 
-      ""
-    
     ];
 
     function showSuggestions(input) {
       const box = document.getElementById("suggestionBox");
       const value = input.trim().toLowerCase();
+
+      box.innerHTML = "";
 
       if (!value) {
         box.classList.add("hidden");
@@ -180,7 +176,7 @@
         return;
       }
 
-      box.innerHTML = filtered.map(s => `<div onclick="selectSuggestion('${s}')">${s}</div>`).join("");
+      box.innerHTML = filtered.map(s => `<div onclick="selectSuggestion('${s.replace(/'/g, "\\'")}')">${s}</div>`).join("");
       box.classList.remove("hidden");
     }
 
@@ -232,7 +228,6 @@
         });
     }
 
-    // Versteckt Vorschläge beim Klick außerhalb
     document.addEventListener("click", function(event) {
       const box = document.getElementById("suggestionBox");
       const input = document.getElementById("startSearch");
