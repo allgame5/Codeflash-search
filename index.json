@@ -59,4 +59,9 @@
     "title": "Dokumentation – CodeFlash",
     "content": "Hier findest du alle Informationen zur API und Implementierung von Codeflash"
   }
+  {
+    "url": "https://cf-barcode.vercel.app/",
+    "title": "Barcode – CodeFlash",
+    "content": "Hier kannst du Barcodes generriehren und einsesen von Codeflash"
+  }
 ]
